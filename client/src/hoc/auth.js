@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {auth} from '../_action/user_action'
-import {withRouter} from 'react-router-dom'
 
 export default function(SpecificComponent, option, adminRoute = null){
 
@@ -35,7 +34,7 @@ export default function(SpecificComponent, option, adminRoute = null){
         }, [])
 
         return (
-            <SpecificComponent /> 
+            <SpecificComponent {...props} /> 
         )
     }
 
