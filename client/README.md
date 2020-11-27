@@ -1,1 +1,1 @@
-# boiler-plate client
+# react-movie-app client
