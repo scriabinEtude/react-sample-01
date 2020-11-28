@@ -14,6 +14,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json())
 app.use(cookieParser())
 
+//movie-app
+app.use('/api/favorite', require('./routes/favorite'))
+
 const mongoose = require("mongoose")
 const { Router } = require('express')
 mongoose.connect(config.mongoURI,{

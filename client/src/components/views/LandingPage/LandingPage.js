@@ -21,7 +21,7 @@ function LandingPage(props){
         .then(response => response.json())
         .then(response => {
             setMovies([...Movies, ...response.results])
-            if(response.page == 1) setMainMovieImage(response.results[0])
+            if(response.page === 1) setMainMovieImage(response.results[0])
             setCurrentPage(response.page)
         })
     }
@@ -51,6 +51,7 @@ function LandingPage(props){
                 {Movies &&  Movies.map((movie, index)=>(
                     <React.Fragment key={index}>
                         <GridCards 
+                            landingPage
                             image={movie.poster_path 
                                 ? `${IMAGE_BASE_URL}w500${movie.poster_path}` 
                                 : null}
