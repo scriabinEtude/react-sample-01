@@ -10,6 +10,7 @@ import RegisterPage from './views/RegisterPage/RegisterPage'
 import Auth from '../hoc/auth'
 import MovieDetail from './views/MovieDetail/MovieDetail'
 import FavoritePage from './views/FavoritePage/FavoritePage'
+import VideoUploadPage from './views/VideoUploadPage/VideoUploadPage'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/register" component={Auth(RegisterPage, false)} />
         <Route exact path="/movie/:movieId" component={Auth(MovieDetail, null)} />
         <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
+        <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} />
       </Switch>
     </div>
   </Router>
