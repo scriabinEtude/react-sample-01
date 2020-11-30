@@ -17,6 +17,7 @@ app.use(cookieParser())
 //movie-app
 app.use('/api/favorite', require('./routes/favorite'))
 app.use('/api/video', require('./routes/video'))
+app.use('/uploads', express.static('uploads'))
 
 const mongoose = require("mongoose")
 const { Router } = require('express')
