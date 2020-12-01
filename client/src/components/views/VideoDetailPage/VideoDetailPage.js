@@ -7,10 +7,11 @@ import Comment from './Sections/Comment'
 
 function VideoDetailPage(props) {
 
-    const videoId = props.match.params.videoId
-    const variable  = { videoId : videoId }
+    const postId = props.match.params.videoId
+    const variable  = { postId : postId }
 
     const [VideoDetail, setVideoDetail] = useState({})
+    const [CommentLists, setCommentLists] = useState([])
 
     useEffect(() => {
         axios.post('/api/video/getVideoDetail', variable)
@@ -21,7 +22,23 @@ function VideoDetailPage(props) {
                     alert('비디오 정보를 가져오지 못했습니다.')
                 }
             })
+
+
+        axios.post('/api/comment/getComments', variable)
+            .then(response => {
+                if(response.data.success){
+                    console.log(response.data.comments)
+                    setCommentLists(response.data.comments)
+                    console.log(CommentLists)
+                }else{
+                    alert('코멘트 정보를 불러오지 못했습니다.')
+                }
+            })
     }, [])
+
+    const refreshFunction = (newComment) => {
+        setCommentLists(CommentLists.concat(newComment))
+    }
 
     if(VideoDetail.writer){
 
@@ -46,7 +63,7 @@ function VideoDetailPage(props) {
                         
     
                         {/* Commenta */}
-                        <Comment postId={videoId}/>
+                        <Comment commentLists={CommentLists} postId={postId} refreshFunction={refreshFunction} />
     
                     </div>
                 </Col>

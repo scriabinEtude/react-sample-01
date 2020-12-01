@@ -54,7 +54,7 @@ router.post('/getVideos', (req,res)=>{
 })
 
 router.post('/getVideoDetail', (req,res)=>{
-    Video.findOne({"_id":req.body.videoId})
+    Video.findOne({"_id":req.body.postId})
         .populate('writer')
         .exec((err, videoDetail) => {
             if(err) return res.status(400).send(err)
