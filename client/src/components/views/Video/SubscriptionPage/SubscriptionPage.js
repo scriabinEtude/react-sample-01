@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Avatar, Col, Typography, Row } from 'antd'
+import { Card, Icon, Avatar, Col, Typography, Row } from 'antd'
 import Axios from 'axios'
 import moment from 'moment'
 const { Title } = Typography
 const { Meta } = Card
 
 
-function VideoLandingPage() {
+function SubscriptionPage() {
 
     const [Video, setVideo] = useState([])
 
     useEffect(() => {
-        Axios.post('/api/video/getVideos')
+
+        const subscriptionVariables = {
+            userFrom : localStorage.userId
+        }
+
+        Axios.post('/api/video/getSubscriptionVideos', subscriptionVariables)
             .then(response => {
                 if(response.data.success){
                     setVideo(response.data.videos)
@@ -21,6 +26,7 @@ function VideoLandingPage() {
             })
     }, [])
 
+    
     const renderCards = Video.map((video, index)=> {
 
         var minutes = Math.floor(video.duration / 60);
@@ -53,7 +59,7 @@ function VideoLandingPage() {
 
     return (
         <div style={{width:'85%', margin:'3rem auto'}}>
-            <Title level={2} > Recommended </Title>
+            <Title level={2} > Subscription </Title>
             <hr />
             <Row gutter={[32, 16]}>
 
@@ -64,4 +70,4 @@ function VideoLandingPage() {
     )
 }
 
-export default VideoLandingPage
+export default SubscriptionPage

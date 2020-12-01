@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer')
 var ffmpeg = require("fluent-ffmpeg");
 const {Video}= require('../models/Video');
+const {Subscriber} = require('../models/Subscriber')
 
 
 let storage = multer.diskStorage({
@@ -52,15 +53,22 @@ router.post('/getVideos', (req,res)=>{
         })
 })
 
+router.post('/getVideoDetail', (req,res)=>{
+    Video.findOne({"_id":req.body.videoId})
+        .populate('writer')
+        .exec((err, videoDetail) => {
+            if(err) return res.status(400).send(err)
+            return res.status(200).json({success:true, videoDetail})
+        })
+})
+
 router.post('/thumbnail', (req, res) => {
     // 썸네일 생성하고 비디오 러닝타임도 가져오기
     let filePath = ""
     let fileDuration = ""
 
     // 비디오 정보 가져오기
-    console.log(req.body)
     ffmpeg.ffprobe(req.body.url, function(err, metadata){
-        console.log(metadata)
         fileDuration = metadata.format.duration
     })
 
@@ -85,5 +93,30 @@ router.post('/thumbnail', (req, res) => {
 
 })
 
+
+
+router.post('/getSubscriptionVideos', (req, res) => {
+
+    //자신의 아이디를 가지고 구독하는 사람들을 찾는다.
+    Subscriber.find({"userFrom":req.body.userFrom})
+        .exec((err, subscriberInfo) => {
+            if(err) return res.status(400).send(err);
+
+            //찾은 사람들의 비디오를 가지고 온다.
+            let subscribedUser = [];
+
+            subscriberInfo.map((subscriber, i)=>{
+                subscribedUser.push(subscriber.userTo)
+            })
+            
+            Video.find({writer:{$in:subscribedUser}})
+                .populate('writer')
+                .exec((err, videos) => {
+                    if(err) return res.status(400).send(err)
+                    res.status(200).json({success: true, videos})
+                })
+
+        })
+})
 
 module.exports = router

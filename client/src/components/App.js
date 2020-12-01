@@ -12,6 +12,8 @@ import MovieDetail from './views/MovieDetail/MovieDetail'
 import FavoritePage from './views/FavoritePage/FavoritePage'
 import VideoLandingPage from './views/Video/VideoLandingPage'
 import VideoUploadPage from './views/Video/VideoUploadPage/VideoUploadPage'
+import VideoDetailPage from './views/VideoDetailPage/VideoDetailPage'
+import SubscriptionPage from './views/Video/SubscriptionPage/SubscriptionPage'
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route exact path="/favorite" component={Auth(FavoritePage, true)} />
         <Route exact path="/video" component={Auth(VideoLandingPage, null)} />
         <Route exact path="/video/upload" component={Auth(VideoUploadPage, true)} />
+        <Route exact path="/video/:videoId" component={Auth(VideoDetailPage, null)} />
+        <Route exact path="/subscription" component={Auth(SubscriptionPage, true)} />
       </Switch>
     </div>
   </Router>

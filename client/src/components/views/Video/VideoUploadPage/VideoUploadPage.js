@@ -92,8 +92,6 @@ function VideoUploadPage(props){
             thumbnail:ThumbnailPath,
         }
 
-        console.log(variables)
-
         Axios.post('/api/video/uploadVideo', variables)
             .then(response => {
                 if(response.data.success){
