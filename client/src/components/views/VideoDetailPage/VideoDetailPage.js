@@ -4,6 +4,7 @@ import axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import Comment from './Sections/Comment'
+import LikeDislikes from './Sections/LikeDislikes'
 
 function VideoDetailPage(props) {
 
@@ -27,13 +28,12 @@ function VideoDetailPage(props) {
         axios.post('/api/comment/getComments', variable)
             .then(response => {
                 if(response.data.success){
-                    console.log(response.data.comments)
                     setCommentLists(response.data.comments)
-                    console.log(CommentLists)
                 }else{
                     alert('코멘트 정보를 불러오지 못했습니다.')
                 }
             })
+
     }, [])
 
     const refreshFunction = (newComment) => {
@@ -50,7 +50,7 @@ function VideoDetailPage(props) {
                     <div style={{width:'100%', padding:"3rem 4rem"}}>
                         <video style={{width:'99%', height:"420px"}} src={`http://localhost:5000/${VideoDetail.filePath}`} controls/>
                         <List.Item
-                            actions={[subscribeButton]}
+                            actions={[<LikeDislikes video={postId} userId={localStorage.getItem('userId')} />, subscribeButton]}
                         >
     
                             <List.Item.Meta
